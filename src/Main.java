@@ -7,17 +7,42 @@ public class Main {
     public static void main(String[] args) {
         String[][] maze = getMaze("src/inputData");
         ArrayList<String> coords = new ArrayList<String>();
-        int x = 0;
-        for (int r = 0; r < maze.length; r++) {
-            for (int c = 0; c < maze[0].length; c++) {
-                if (maze[r][c].equals(".")) {
-                    coords.add("(" + r + ", " + c + ")");
-                }
+        int row = 0;
+        int col = 0;
+        int move = 0;
+        //coords.add("(" + row + ", " + col + ")");
+        //not at bottom right
+        while (row != maze.length - 1 && col != maze[0].length - 1) {
+            System.out.println(row + ", " + col);
+            if (maze[row][col].equals(".") && maze[row][col + 1].equals(".")) {
+                move++;
+            } else if (maze[row][col].equals(".") && maze[row + 1][col].equals(".")) {
+                move++;
+            } else if (maze[row][col].equals(".") && maze[row][col - 1].equals(".")) {
+                move++;
+            } else if (maze[row][col].equals(".") && maze[row - 1][col].equals(".")) {
+                move++;
             }
+            if (maze[row][col].equals(".") && maze[row][col + 1].equals(".") && move == 1) {
+                col++;
+            }
+            if (maze[row][col].equals(".") && maze[row + 1][col].equals(".") && move == 1) {
+                row++;
+            }
+            else if (maze[row][col].equals(".") && maze[row][col - 1].equals(".") && move == 1) {
+                col--;
+            }
+            else if (maze[row][col].equals(".") && maze[row - 1][col].equals(".") && move == 1) {
+                row--;
+            }
+
         }
+
+
         for (String path : coords) {
             System.out.print(path + "--->");
         }
+
     }
     public static String[][] getMaze(String fileName) {
         File f = new File(fileName);
