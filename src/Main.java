@@ -3,17 +3,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Main {
     public static void main(String[] args) {
-        String[][] maze = getMaze("src/inputData");
+        String[][] maze = getMaze("src/inputData2");
         ArrayList<String> coords = new ArrayList<String>();
         int row = 0;
         int col = 0;
         boolean end = false;
         //not at bottom right
-        while (!end) {
-            //prevents a back and forth check (multiple pathways)
+            while (!end) {
+                //prevents a back and forth check (multiple pathways)
                 maze[row][col] = "*";
                 if (row == maze.length - 1 && col == maze[0].length - 1) {
                     coords.add("(" + row + ", " + col + ")");
@@ -34,15 +33,66 @@ public class Main {
                 else if (row - 1 >= 0 && maze[row - 1][col].equals(".")) {
                     coords.add("(" + row + ", " + col + ")");
                     row--;
+                } else { //checks down, right, and up for a dead end
+                    if (maze[row+1][col].equals("*") && row + 1 < maze.length && col + 1 < maze[0].length && maze[row][col + 1].equals("#") && row - 1 >= 0 && maze[row - 1][col].equals("#")) {
+                        maze[row][col] = "X";
+                        for (int i = 0; i < maze.length; i++) {
+                            for (int j = 0; j < maze[0].length; j++) {
+                                if (maze[i][j].equals("*")) {
+                                    maze[i][j] = ".";
+                                }
+                            }
+                        }
+                        row = 0;
+                        col = 0;
+                        //checks up, left, and down for a dead end
+                    } else if (row - 1 >= 0 && maze[row - 1][col].equals("*") && col - 1 >= 0 && maze[row][col - 1].equals("#") && row + 1 < maze.length && maze[row + 1][col].equals("#")) {
+                        maze[row][col] = "X";
+                        for (int i = 0; i < maze.length; i++) {
+                            for (int j = 0; j < maze[0].length; j++) {
+                                if (maze[i][j].equals("*")) {
+                                    maze[i][j] = ".";
+                                }
+                            }
+                        }
+                        row = 0;
+                        col = 0;
+                        //checks down, right, and left for dead end
+                    } else if (maze[row+1][col].equals("#") && row + 1 < maze.length && col + 1 < maze[0].length && maze[row][col + 1].equals("*") && col - 1 >= 0 && maze[row][col - 1].equals("*")) {
+                        maze[row][col] = "X";
+                        for (int i = 0; i < maze.length; i++) {
+                            for (int j = 0; j < maze[0].length; j++) {
+                                if (maze[i][j].equals("*")) {
+                                    maze[i][j] = ".";
+                                }
+                            }
+                        }
+                        row = 0;
+                        col = 0;
+                        //checks up, left, and right for dead end
+                    } else if (row - 1 >= 0 && maze[row - 1][col].equals("#") && col - 1 >= 0 && maze[row][col - 1].equals("*") && col + 1 < maze[0].length && maze[row][col + 1].equals("#")) {
+                        maze[row][col] = "X";
+                        for (int i = 0; i < maze.length; i++) {
+                            for (int j = 0; j < maze[0].length; j++) {
+                                if (maze[i][j].equals("*")) {
+                                    maze[i][j] = ".";
+                                }
+                            }
+                        }
+                        row = 0;
+                        col = 0;
+                    }
                 }
             }
 /*
 Solution: (0, 0) ---> (0, 1) ---> (0, 2) ---> (0, 3) ---> (1, 3) ---> (2, 3) ---> (3, 3) ---> (4, 3) ---> (4, 2) ---> (4, 1) ---> (4, 0) ---> (5, 0) ---> (6, 0) ---> (6, 1) ---> (6, 2) ---> (6, 3) ---> (6, 4) ---> (6, 5) ---> (6, 6) ---> (6, 7) ---> (6, 8) ---> (6, 9) ---> (6, 10) ---> (6, 11) ---> (6, 12) ---> (6, 13) ---> (6, 14) ---> (6, 15) ---> (6, 16) ---> (5, 16) ---> (4, 16) ---> (3, 16) ---> (2, 16) ---> (1, 16) ---> (1, 17) ---> (1, 18) ---> (1, 19) ---> (1, 20) ---> (1, 21) ---> (1, 22) ---> (1, 23) ---> (1, 24) ---> (2, 24) ---> (3, 24) ---> (4, 24) ---> (5, 24) ---> (6, 24) ---> (7, 24) ---> (7, 23) ---> (7, 22) ---> (7, 21) ---> (8, 21) ---> (9, 21) ---> (9, 22) ---> (9, 23) ---> (9, 24) ---> (9, 25) --->
 (9, 26)
- */
+*/
         for (String path : coords) {
             System.out.print(path + "--->");
         }
+
+
 
 
     }
@@ -71,3 +121,6 @@ Solution: (0, 0) ---> (0, 1) ---> (0, 2) ---> (0, 3) ---> (1, 3) ---> (2, 3) ---
         return maze;
     }
 }
+
+
+
