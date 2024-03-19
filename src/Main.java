@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String[][] maze = getMaze("src/inputData");
+        String[][] maze = getMaze("src/inputData2");
         ArrayList<String> coords = new ArrayList<String>();
         int row = 0;
         int col = 0;
@@ -35,6 +35,7 @@ public class Main {
                     row--;
                 } else { //if we find a dead end, clear the path and start from the beginning
                         maze[row][col] = "X";
+                        coords.clear();
                         for (int i = 0; i < maze.length; i++) {
                             for (int j = 0; j < maze[0].length; j++) {
                                 if (maze[i][j].equals("*")) {
