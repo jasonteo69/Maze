@@ -67,10 +67,6 @@ Solution: (0, 0) ---> (0, 1) ---> (0, 2) ---> (0, 3) ---> (1, 3) ---> (2, 3) ---
         System.out.println(counter);
         System.out.println(maze[0].length);
         System.out.println(maze.length);
-
-
-
-
     }
     public static String[][] getMaze(String fileName) {
         File f = new File(fileName);
