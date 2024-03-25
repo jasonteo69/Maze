@@ -14,23 +14,23 @@ public class Main {
             while (!end) {
                 //prevents a back and forth check (multiple pathways)
                 maze[row][col] = "*";
-                if (row == maze.length - 1 && col == maze[0].length - 1) {
+                if (reachedEnd(row, col, maze)) {
                     coords.add("(" + row + ", " + col + ")");
                     end = true;
                 } //down
-                else if (row + 1 < maze.length && maze[row + 1][col].equals(".")) {
+                else if (canMoveDown(row, col, maze)) {
                     coords.add("(" + row + ", " + col + ")");
                     row++;
                 } //right
-                else if (col + 1 < maze[0].length && maze[row][col + 1].equals(".")) {
+                else if (canMoveRight(row, col, maze)) {
                     coords.add("(" + row + ", " + col + ")");
                     col++;
                 } //left
-                else if (col - 1 >= 0 && maze[row][col - 1].equals(".")) {
+                else if (canMoveLeft(row, col, maze)) {
                     coords.add("(" + row + ", " + col + ")");
                     col--;
                 } //up
-                else if (row - 1 >= 0 && maze[row - 1][col].equals(".")) {
+                else if (canMoveUp(row, col, maze)) {
                     coords.add("(" + row + ", " + col + ")");
                     row--;
                 } else { //if we find a dead end, clear the path and start from the beginning
@@ -91,6 +91,41 @@ Solution: (0, 0) ---> (0, 1) ---> (0, 2) ---> (0, 3) ---> (1, 3) ---> (2, 3) ---
             }
         }
         return maze;
+    }
+    public static boolean canMoveLeft(int row, int column, String[][] maze) {
+        if (column - 1 >= 0 && maze[row][column - 1].equals(".")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean canMoveRight(int row, int column, String[][] maze) {
+        if (column + 1 < maze[0].length && maze[row][column + 1].equals(".")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean canMoveUp(int row,int column, String[][] maze) {
+        if (row - 1 >= 0 && maze[row - 1][column].equals(".")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean canMoveDown(int row, int column, String[][] maze) {
+        if (row + 1 < maze.length && maze[row + 1][column].equals(".")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean reachedEnd(int row, int column, String[][] maze) {
+        if (row == maze.length - 1 && column == maze[0].length - 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
